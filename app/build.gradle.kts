@@ -1,7 +1,10 @@
+import org.gradle.testing.jacoco.tasks.JacocoReport
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    id("jacoco")
 }
 
 android {
@@ -19,6 +22,12 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField(
+            "String",
+            "API_KEY",
+            project.findProperty("API_KEY") as String? ?: "\"DEFAULT_API_KEY\""
+        )
     }
 
     buildTypes {
@@ -28,6 +37,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        debug {
+            isMinifyEnabled = false
+            enableUnitTestCoverage = true // ✅ Enable coverage for debug build
+            enableAndroidTestCoverage = true
         }
     }
     compileOptions {
@@ -39,6 +53,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -48,6 +63,16 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    sonarqube {
+        properties {
+            property("sonar.projectName", "MyKotlinApp")
+            property("sonar.projectKey", "MyKotlinApp")
+            property("sonar.language", "kotlin")
+            property("sonar.sourceEncoding", "UTF-8")
+        }
+    }
+
 }
 
 dependencies {
@@ -71,8 +96,46 @@ dependencies {
 
     implementation(libs.generativeai)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation ("androidx.activity:activity-ktx:1.10.0")
-    implementation ("androidx.fragment:fragment-ktx:1.8.6")
-    implementation ("com.airbnb.android:lottie-compose:4.2.0")
+    implementation("androidx.activity:activity-ktx:1.10.0")
+    implementation("androidx.fragment:fragment-ktx:1.8.6")
+    implementation("com.airbnb.android:lottie-compose:4.2.0")
     implementation(libs.androidx.core.splashscreen)
+
+    // JUnit 5 API and Test Engine
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+
+    // JUnit Vintage (for JUnit 4 tests compatibility)
+    testImplementation("org.junit.vintage:junit-vintage-engine:5.10.0")
+
+    // Test Runtime (ensures the test engine is included)
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
+
+    // Mockito for mocking dependencies (optional)
+    testImplementation("org.mockito:mockito-core:5.11.0")
+
+    // Jacoco support for JUnit
+    testImplementation("org.jacoco:org.jacoco.core:0.8.11")
+    testImplementation("junit:junit:4.13.2")
 }
+
+tasks.register<JacocoReport>("jacocoTestReport") {
+    group = "Verification" // ✅ Group under 'Verification' tasks
+    description = "Generates a Jacoco coverage report for unit tests." // ✅ Description
+    dependsOn("testDebugUnitTest") // ✅ Ensure test runs before coverage report
+
+    reports {
+        xml.required.set(true)  // ✅ Required for SonarQube
+        html.required.set(true) // ✅ Human-readable report
+        csv.required.set(false)
+    }
+
+    sourceDirectories.setFrom(files("$projectDir/src/main/java/it/techies/aichatbotwithcompose"))
+    classDirectories.setFrom(files(layout.buildDirectory.dir("tmp/kotlin-classes/debug"))) // ✅ Updated
+    executionData.setFrom(files(layout.buildDirectory.file("jacoco/testDebugUnitTest.exec"))) // ✅ Updated
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+    finalizedBy("jacocoTestReport") // Run Jacoco after tests
+}
+
