@@ -8,6 +8,15 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        create("release") {
+            storeFile =
+                file("/home/techies/TaranWork/2025/JetpackCompose/AIChatbotWithCompose/AIChat.jks")
+            storePassword = project.findProperty("STORE_PASSWORD") as String
+            keyAlias = project.findProperty("ALIAS_KEY") as String
+            keyPassword = project.findProperty("ALIAS_KEY_PASSWORD") as String
+        }
+    }
     namespace = "it.techies.aichatbotwithcompose"
     compileSdk = 35
 
