@@ -48,16 +48,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Initialize CodeQL
+      - name: Initialize CodeQL (without autobuild)
         uses: github/codeql-action/init@v2
         with:
           languages: java
+          build-mode: manual  # 🚀 Prevents CodeQL autobuild
 
-      - name: Manually Build Project (Instead of Autobuild)
-        run: ./gradlew clean build --stacktrace
+      - name: Manually Build Project for CodeQL
+        run: ./gradlew clean build --stacktrace  # 🚀 Manually specify Gradle build
 
       - name: Run CodeQL Analysis
         uses: github/codeql-action/analyze@v2
+
 
 - name: Verify `GOOGLE_API_KEY` Secret
   run: |
