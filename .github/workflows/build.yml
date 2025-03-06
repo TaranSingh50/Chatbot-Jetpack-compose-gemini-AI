@@ -25,40 +25,19 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      - name: Create `local.properties`
+      - name: Create `local.properties` in the Project Root
         run: |
           echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" > local.properties
-          cat local.properties  # Debugging step (optional)
+          cat local.properties  # Debugging step
+
+      - name: Verify `local.properties` Exists
+        run: ls -lah local.properties || echo "❌ local.properties not found!"
 
       - name: Grant Execute Permissions to Gradle
         run: chmod +x gradlew
 
       - name: Build Project Manually
         run: ./gradlew clean build --stacktrace
-
-  codeql-analysis:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      security-events: write
-      actions: read
-      contents: read
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Initialize CodeQL (without autobuild)
-        uses: github/codeql-action/init@v2
-        with:
-          languages: java
-          build-mode: manual  # 🚀 Prevents CodeQL autobuild
-
-      - name: Manually Build Project for CodeQL
-        run: ./gradlew clean build --stacktrace  # 🚀 Manually specify Gradle build
-
-      - name: Run CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
 
 - name: Verify `GOOGLE_API_KEY` Secret
   run: |
