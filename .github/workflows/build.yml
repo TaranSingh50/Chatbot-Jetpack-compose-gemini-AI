@@ -60,7 +60,6 @@ jobs:
       - name: Run CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
-
 - name: Verify `GOOGLE_API_KEY` Secret
   run: |
     if [ -z "${{ secrets.GOOGLE_API_KEY }}" ]; then
