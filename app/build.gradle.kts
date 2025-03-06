@@ -12,6 +12,9 @@ val localProperties = Properties().apply {
     load(rootProject.file("local.properties").inputStream())
 }
 
+// Fetch API key as a string and ensure it's correctly formatted
+val googleApiKey = localProperties["GOOGLE_API_KEY"] as String? ?: "DEFAULT_API_KEY"
+
 android {
     signingConfigs {
         create("release") {
@@ -37,11 +40,7 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField(
-            "String",
-            "GOOGLE_API_KEY",
-            localProperties["GOOGLE_API_KEY"] as String? ?: "\"DEFAULT_API_KEY\""
-        )
+        buildConfigField("String", "GOOGLE_API_KEY", "\"$googleApiKey\"")
     }
 
     buildTypes {
