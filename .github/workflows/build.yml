@@ -36,3 +36,26 @@ jobs:
       - name: Build Project Manually
         run: ./gradlew clean build --stacktrace
 
+  codeql-analysis:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: java
+
+      - name: Manually Build Project (Instead of Autobuild)
+        run: ./gradlew clean build --stacktrace
+
+      - name: Run CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+
