@@ -1,10 +1,15 @@
 import org.gradle.testing.jacoco.tasks.JacocoReport
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
     id("jacoco")
+}
+
+val localProperties = Properties().apply {
+    load(rootProject.file("local.properties").inputStream())
 }
 
 android {
@@ -34,8 +39,8 @@ android {
 
         buildConfigField(
             "String",
-            "API_KEY",
-            project.findProperty("API_KEY") as String? ?: "\"DEFAULT_API_KEY\""
+            "GOOGLE_API_KEY",
+            localProperties["GOOGLE_API_KEY"] as String? ?: "\"DEFAULT_API_KEY\""
         )
     }
 
@@ -125,6 +130,9 @@ dependencies {
     // Jacoco support for JUnit
     testImplementation("org.jacoco:org.jacoco.core:0.8.11")
     testImplementation("junit:junit:4.13.2")
+
+    // Encrypted SharedPreferences
+    implementation ("androidx.security:security-crypto:1.1.0-alpha06")
 }
 
 tasks.register<JacocoReport>("jacocoTestReport") {
