@@ -28,7 +28,7 @@ jobs:
       - name: Create `local.properties` in the Project Root
         run: |
           echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" > local.properties
-          cat local.properties  # Debugging step
+          cat local.properties  # Debugging step to confirm the file exists
 
       - name: Verify `local.properties` Exists
         run: ls -lah local.properties || echo "❌ local.properties not found!"
@@ -38,6 +38,7 @@ jobs:
 
       - name: Build Project Manually
         run: ./gradlew clean build --stacktrace
+
 
 - name: Verify `GOOGLE_API_KEY` Secret
   run: |
