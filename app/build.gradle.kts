@@ -114,7 +114,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation("androidx.activity:activity-ktx:1.10.0")
     implementation("androidx.fragment:fragment-ktx:1.8.6")
-    implementation("com.airbnb.android:lottie-compose:4.2.0")
+    implementation("com.airbnb.android:lottie-compose:6.6.3")
     implementation(libs.androidx.core.splashscreen)
 
     // JUnit 5 API and Test Engine
