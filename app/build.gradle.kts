@@ -118,13 +118,13 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
 
     // JUnit 5 API and Test Engine
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.12.0")
 
     // JUnit Vintage (for JUnit 4 tests compatibility)
     testImplementation("org.junit.vintage:junit-vintage-engine:5.10.0")
 
     // Test Runtime (ensures the test engine is included)
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.12.0")
 
     // Mockito for mocking dependencies (optional)
     testImplementation("org.mockito:mockito-core:5.11.0")
