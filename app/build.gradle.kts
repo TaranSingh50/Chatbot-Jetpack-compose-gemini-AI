@@ -127,7 +127,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
 
     // Mockito for mocking dependencies (optional)
-    testImplementation("org.mockito:mockito-core:5.11.0")
+    testImplementation("org.mockito:mockito-core:5.16.0")
 
     // Jacoco support for JUnit
     testImplementation("org.jacoco:org.jacoco.core:0.8.11")
