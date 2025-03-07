@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    ignore:
+      - dependency-name: "com.example:some-library"
+    labels:
+      - "dependencies"
+      - "security"
+    commit-message:
+      prefix: "fix"
+      include: "scope"
