@@ -130,7 +130,7 @@ dependencies {
     testImplementation("org.mockito:mockito-core:5.16.0")
 
     // Jacoco support for JUnit
-    testImplementation("org.jacoco:org.jacoco.core:0.8.11")
+    testImplementation("org.jacoco:org.jacoco.core:0.8.12")
     testImplementation("junit:junit:4.13.2")
 
     // Encrypted SharedPreferences
