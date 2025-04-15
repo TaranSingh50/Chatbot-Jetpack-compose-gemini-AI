@@ -53,4 +53,5 @@ class ChatBotViewModel:ViewModel() {
 /*
 * 1. https://stackoverflow.com/questions/79175287/what-steps-can-i-use-to-debug-a-googlegenerativeai-error-resource-has-been-exha
 * 2. https://console.cloud.google.com/iam-admin/quotas?referrer=search&pageState=(%22allQuotasTable%22:(%22f%22:%22%255B%257B_22k_22_3A_22_22_2C_22t_22_3A10_2C_22v_22_3A_22_5C_22gemini_5C_22_22%257D%255D%22))&authuser=5&project=gen-lang-client-0249157477
+* 3. https://aistudio.google.com/app/u/5/apikey
 * */

@@ -112,29 +112,29 @@ dependencies {
 
     implementation(libs.generativeai)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation("androidx.activity:activity-ktx:1.10.0")
-    implementation("androidx.fragment:fragment-ktx:1.8.6")
-    implementation("com.airbnb.android:lottie-compose:6.6.3")
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.lottie.compose)
     implementation(libs.androidx.core.splashscreen)
 
     // JUnit 5 API and Test Engine
-    testImplementation("org.junit.jupiter:junit-jupiter:5.12.0")
+    testImplementation(libs.junit.jupiter)
 
     // JUnit Vintage (for JUnit 4 tests compatibility)
-    testImplementation("org.junit.vintage:junit-vintage-engine:5.12.0")
+    testImplementation(libs.junit.vintage.engine)
 
     // Test Runtime (ensures the test engine is included)
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.12.0")
+    testRuntimeOnly(libs.junit.jupiter.engine)
 
     // Mockito for mocking dependencies (optional)
-    testImplementation("org.mockito:mockito-core:5.16.0")
+    testImplementation(libs.mockito.core)
 
     // Jacoco support for JUnit
-    testImplementation("org.jacoco:org.jacoco.core:0.8.11")
-    testImplementation("junit:junit:4.13.2")
+    testImplementation(libs.org.jacoco.core)
+    testImplementation(libs.junit)
 
     // Encrypted SharedPreferences
-    implementation ("androidx.security:security-crypto:1.1.0-alpha06")
+    implementation (libs.androidx.security.crypto)
 }
 
 tasks.register<JacocoReport>("jacocoTestReport") {
