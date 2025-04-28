@@ -1,5 +1,5 @@
 [versions]
-agp = "8.5.2"
+agp = "8.9.2"
 fragmentKtx = "1.8.6"
 generativeai = "0.9.0"
 junitJupiter = "5.10.0"
